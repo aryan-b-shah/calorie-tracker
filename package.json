@@ -1,0 +1,33 @@
+{
+  "name": "calorie-tracker",
+  "version": "1.0.0",
+  "description": "A production-ready MVP of a Calorie Tracker Web App",
+  "main": "backend/server.js",
+  "scripts": {
+    "start": "node backend/server.js",
+    "dev": "nodemon backend/server.js",
+    "build": "cd frontend && npm run build",
+    "install-all": "npm install && cd frontend && npm install"
+  },
+  "dependencies": {
+    "axios": "^1.11.0",
+    "bcryptjs": "^2.4.3",
+    "cors": "^2.8.5",
+    "dotenv": "^17.2.1",
+    "express": "^4.18.2",
+    "jsonwebtoken": "^9.0.2",
+    "sqlite3": "^5.1.6"
+  },
+  "devDependencies": {
+    "nodemon": "^3.0.1"
+  },
+  "keywords": [
+    "calorie",
+    "tracker",
+    "nutrition",
+    "health",
+    "fitness"
+  ],
+  "author": "Your Name",
+  "license": "MIT"
+}
