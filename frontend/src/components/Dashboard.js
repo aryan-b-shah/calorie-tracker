@@ -29,6 +29,12 @@ const Dashboard = ({ user, onLogout }) => {
       setUserProfile(response.data);
     } catch (error) {
       console.error('Failed to fetch user profile:', error);
+      if (error.response?.status === 401) {
+        // Token expired, redirect to login
+        localStorage.removeItem('token');
+        localStorage.removeItem('userId');
+        window.location.href = '/login';
+      }
     }
   };
 

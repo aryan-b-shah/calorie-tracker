@@ -15,10 +15,102 @@ const NUTRITIONIX_APP_KEY = process.env.NUTRITIONIX_APP_KEY || 'your-app-key-her
 const app = express();
 const PORT = process.env.PORT || 5001;
 
+// Error handling middleware
+const errorHandler = (err, req, res, next) => {
+  console.error('Error:', err);
+  
+  if (err.code === 'SQLITE_CONSTRAINT') {
+    return res.status(400).json({ error: 'Database constraint violation' });
+  }
+  
+  if (err.code === 'SQLITE_ERROR') {
+    return res.status(500).json({ error: 'Database error' });
+  }
+  
+  res.status(500).json({ error: 'Internal server error' });
+};
+
+// Request logging middleware
+const requestLogger = (req, res, next) => {
+  console.log(`${new Date().toISOString()} - ${req.method} ${req.path} - ${req.ip}`);
+  next();
+};
+
+app.use(requestLogger);
+
 // Middleware
 app.use(cors());
-app.use(express.json());
+app.use(express.json({ limit: '10mb' }));
 app.use(express.static(path.join(__dirname, '../frontend/build')));
+
+// Input validation middleware
+const validateEmail = (email) => {
+  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  return emailRegex.test(email);
+};
+
+const validatePassword = (password) => {
+  return password && password.length >= 8 && /[A-Z]/.test(password) && /[0-9]/.test(password);
+};
+
+// Input sanitization
+const sanitizeInput = (input) => {
+  if (typeof input === 'string') {
+    return input.trim().replace(/[<>]/g, '');
+  }
+  return input;
+};
+
+const validateUserData = (req, res, next) => {
+  // Sanitize all string inputs
+  if (req.body.email) req.body.email = sanitizeInput(req.body.email);
+  if (req.body.sex) req.body.sex = sanitizeInput(req.body.sex);
+  if (req.body.activity_level) req.body.activity_level = sanitizeInput(req.body.activity_level);
+  
+  const { email, password, age, sex, height, weight, activity_level, target_calories } = req.body;
+  
+  // Email validation
+  if (email && !validateEmail(email)) {
+    return res.status(400).json({ error: 'Invalid email format' });
+  }
+  
+  // Password validation
+  if (password && !validatePassword(password)) {
+    return res.status(400).json({ error: 'Password must be at least 8 characters with uppercase letter and number' });
+  }
+  
+  // Age validation
+  if (age && (isNaN(age) || age < 13 || age > 120)) {
+    return res.status(400).json({ error: 'Age must be between 13 and 120' });
+  }
+  
+  // Sex validation
+  if (sex && !['male', 'female', 'other'].includes(sex)) {
+    return res.status(400).json({ error: 'Invalid sex value' });
+  }
+  
+  // Height validation
+  if (height && (isNaN(height) || height < 100 || height > 250)) {
+    return res.status(400).json({ error: 'Height must be between 100 and 250 cm' });
+  }
+  
+  // Weight validation
+  if (weight && (isNaN(weight) || weight < 30 || weight > 300)) {
+    return res.status(400).json({ error: 'Weight must be between 30 and 300 kg' });
+  }
+  
+  // Activity level validation
+  if (activity_level && !['sedentary', 'lightly_active', 'moderately_active', 'very_active', 'extremely_active'].includes(activity_level)) {
+    return res.status(400).json({ error: 'Invalid activity level' });
+  }
+  
+  // Target calories validation
+  if (target_calories && (isNaN(target_calories) || target_calories < 800 || target_calories > 5000)) {
+    return res.status(400).json({ error: 'Target calories must be between 800 and 5000' });
+  }
+  
+  next();
+};
 
 // Database setup
 const db = new sqlite3.Database('./users.db');
@@ -84,7 +176,7 @@ const authenticateToken = (req, res, next) => {
 };
 
 // Routes
-app.post('/api/auth/register', async (req, res) => {
+app.post('/api/auth/register', validateUserData, async (req, res) => {
   try {
     const { email, password, age, sex, height, weight, activity_level, target_calories } = req.body;
     const hashedPassword = await bcrypt.hash(password, 10);
@@ -134,7 +226,7 @@ app.get('/api/user/:id', authenticateToken, (req, res) => {
   });
 });
 
-app.put('/api/user/:id', authenticateToken, (req, res) => {
+app.put('/api/user/:id', authenticateToken, validateUserData, (req, res) => {
   const { id } = req.params;
   const { age, sex, height, weight, activity_level, target_calories } = req.body;
   
@@ -372,6 +464,9 @@ app.delete('/api/food/entry/:id', authenticateToken, (req, res) => {
     }
   );
 });
+
+// Apply error handling middleware
+app.use(errorHandler);
 
 app.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`);

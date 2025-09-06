@@ -11,13 +11,36 @@ function App() {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    const token = localStorage.getItem('token');
-    const userId = localStorage.getItem('userId');
-    if (token && userId) {
-      // Verify token and set user
-      setUser({ token, userId });
-    }
-    setLoading(false);
+    const verifyToken = async () => {
+      const token = localStorage.getItem('token');
+      const userId = localStorage.getItem('userId');
+      
+      if (token && userId) {
+        try {
+          // Verify token with backend
+          const response = await fetch(`http://localhost:5001/api/user/${userId}`, {
+            headers: {
+              'Authorization': `Bearer ${token}`
+            }
+          });
+          
+          if (response.ok) {
+            setUser({ token, userId });
+          } else {
+            // Token is invalid, clear storage
+            localStorage.removeItem('token');
+            localStorage.removeItem('userId');
+          }
+        } catch (error) {
+          console.error('Token verification failed:', error);
+          localStorage.removeItem('token');
+          localStorage.removeItem('userId');
+        }
+      }
+      setLoading(false);
+    };
+    
+    verifyToken();
   }, []);
 
   const login = (userData) => {
