@@ -23,7 +23,7 @@ const Dashboard = ({ user, onLogout }) => {
   const fetchUserProfile = async () => {
     try {
       const token = localStorage.getItem('token');
-      const response = await axios.get(`http://localhost:5001/api/user/${user.userId}`, {
+      const response = await axios.get(`${process.env.REACT_APP_API_URL || 'http://localhost:5001'}/api/user/${user.userId}`, {
         headers: { Authorization: `Bearer ${token}` }
       });
       setUserProfile(response.data);
@@ -41,7 +41,7 @@ const Dashboard = ({ user, onLogout }) => {
   const fetchDailyTotal = async () => {
     try {
       const token = localStorage.getItem('token');
-      const response = await axios.get(`http://localhost:5001/api/food/daily-total/${today}`, {
+      const response = await axios.get(`${process.env.REACT_APP_API_URL || 'http://localhost:5001'}/api/food/daily-total/${today}`, {
         headers: { Authorization: `Bearer ${token}` }
       });
       setDailyTotal(response.data);
@@ -53,7 +53,7 @@ const Dashboard = ({ user, onLogout }) => {
   const fetchWeeklyProgress = async () => {
     try {
       const token = localStorage.getItem('token');
-      const response = await axios.get('http://localhost:5001/api/food/weekly-progress', {
+      const response = await axios.get(`${process.env.REACT_APP_API_URL || 'http://localhost:5001'}/api/food/weekly-progress`, {
         headers: { Authorization: `Bearer ${token}` }
       });
       setWeeklyProgress(response.data);

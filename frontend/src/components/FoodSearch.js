@@ -15,7 +15,7 @@ const FoodSearch = ({ onFoodAdded }) => {
     setLoading(true);
     try {
       const token = localStorage.getItem('token');
-      const response = await axios.get(`http://localhost:5001/api/food/search?query=${encodeURIComponent(searchQuery)}`, {
+      const response = await axios.get(`${process.env.REACT_APP_API_URL || 'http://localhost:5001'}/api/food/search?query=${encodeURIComponent(searchQuery)}`, {
         headers: { Authorization: `Bearer ${token}` }
       });
       setSearchResults(response.data);
@@ -42,7 +42,7 @@ const FoodSearch = ({ onFoodAdded }) => {
       const token = localStorage.getItem('token');
       const today = new Date().toISOString().split('T')[0];
       
-      await axios.post('http://localhost:5001/api/food/entry', {
+      await axios.post(`${process.env.REACT_APP_API_URL || 'http://localhost:5001'}/api/food/entry`, {
         food_name: selectedFood.name,
         calories: selectedFood.calories,
         protein: selectedFood.protein,

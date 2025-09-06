@@ -18,7 +18,7 @@ function App() {
       if (token && userId) {
         try {
           // Verify token with backend
-          const response = await fetch(`http://localhost:5001/api/user/${userId}`, {
+          const response = await fetch(`${process.env.REACT_APP_API_URL || 'http://localhost:5001'}/api/user/${userId}`, {
             headers: {
               'Authorization': `Bearer ${token}`
             }

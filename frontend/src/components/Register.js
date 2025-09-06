@@ -80,7 +80,7 @@ const Register = ({ onLogin }) => {
 
     try {
       const { confirmPassword, ...registrationData } = formData;
-      const response = await axios.post('http://localhost:5001/api/auth/register', registrationData);
+      const response = await axios.post(`${process.env.REACT_APP_API_URL || 'http://localhost:5001'}/api/auth/register`, registrationData);
       onLogin(response.data);
     } catch (error) {
       setError(error.response?.data?.error || 'Registration failed. Please try again.');

@@ -14,7 +14,7 @@ const FoodLog = ({ date, onFoodUpdated, onFoodDeleted }) => {
   const fetchFoodEntries = async () => {
     try {
       const token = localStorage.getItem('token');
-      const response = await axios.get(`http://localhost:5001/api/food/entries/${date}`, {
+      const response = await axios.get(`${process.env.REACT_APP_API_URL || 'http://localhost:5001'}/api/food/entries/${date}`, {
         headers: { Authorization: `Bearer ${token}` }
       });
       setFoodEntries(response.data);
@@ -33,7 +33,7 @@ const FoodLog = ({ date, onFoodUpdated, onFoodDeleted }) => {
   const handleSave = async (entryId) => {
     try {
       const token = localStorage.getItem('token');
-      await axios.put(`http://localhost:5001/api/food/entry/${entryId}`, {
+      await axios.put(`${process.env.REACT_APP_API_URL || 'http://localhost:5001'}/api/food/entry/${entryId}`, {
         quantity: editQuantity
       }, {
         headers: { Authorization: `Bearer ${token}` }
@@ -58,7 +58,7 @@ const FoodLog = ({ date, onFoodUpdated, onFoodDeleted }) => {
 
     try {
       const token = localStorage.getItem('token');
-      await axios.delete(`http://localhost:5001/api/food/entry/${entryId}`, {
+      await axios.delete(`${process.env.REACT_APP_API_URL || 'http://localhost:5001'}/api/food/entry/${entryId}`, {
         headers: { Authorization: `Bearer ${token}` }
       });
       

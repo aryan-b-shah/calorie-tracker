@@ -23,7 +23,7 @@ const Login = ({ onLogin }) => {
     setError('');
 
     try {
-      const response = await axios.post('http://localhost:5001/api/auth/login', formData);
+      const response = await axios.post(`${process.env.REACT_APP_API_URL || 'http://localhost:5001'}/api/auth/login`, formData);
       onLogin(response.data);
     } catch (error) {
       setError(error.response?.data?.error || 'Login failed. Please try again.');

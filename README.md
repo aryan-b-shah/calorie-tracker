@@ -1,11 +1,11 @@
-# 🍎 Calorie Tracker Web App
+# Calorie Tracker Web App
 
-A production-ready MVP of a Calorie Tracker Web App built with Node.js, Express, SQLite, and React. Track your daily calorie intake, monitor your nutrition goals, and visualize your progress over time with real nutritional data from Nutritionix API.
+## 🧠 Overview
 
-![Calorie Tracker](https://img.shields.io/badge/Status-Production%20Ready-brightgreen)
-![Node.js](https://img.shields.io/badge/Node.js-18+-blue)
-![React](https://img.shields.io/badge/React-18+-blue)
-![License](https://img.shields.io/badge/License-MIT-green)
+A full-stack nutrition management platform that helps users track calories, nutrients, and progress toward their health goals. Built with modern technologies and designed with a mobile-first, responsive UI.
+
+## 👨‍💻 Author
+- Aryan Shah
 
 ## ✨ Features
 
@@ -28,7 +28,7 @@ A production-ready MVP of a Calorie Tracker Web App built with Node.js, Express,
 - **Progress Visualization**: Beautiful charts and progress bars
 
 ### 🎨 Modern UI/UX
-- **Responsive Design**: Mobile-first approach that works on all devices
+- **Responsive Design**: Web-first approach that works on all devices
 - **Clean Interface**: Modern, intuitive design with smooth animations
 - **Accessibility**: Keyboard navigation and screen reader support
 - **Dark/Light Theme**: Comfortable viewing in any lighting condition
@@ -86,9 +86,6 @@ Create a `.env` file in the root directory:
 # Nutritionix API Credentials
 NUTRITIONIX_APP_ID=your_app_id_here
 NUTRITIONIX_APP_KEY=your_app_key_here
-
-# JWT Secret (optional for development)
-JWT_SECRET=your-super-secret-key
 
 # Server Port
 PORT=5001
@@ -233,123 +230,3 @@ calorie-tracker/
 ├── .env                   # Environment variables
 └── package.json          # Backend dependencies
 ```
-
-### Available Scripts
-```bash
-# Root directory
-npm start          # Start backend server
-npm run dev        # Start backend with nodemon
-npm run build      # Build frontend for production
-npm run install-all # Install all dependencies
-
-# Frontend directory
-npm start          # Start React development server
-npm run build      # Build for production
-npm test           # Run tests
-```
-
-### Environment Variables
-- `NUTRITIONIX_APP_ID` - Your Nutritionix API App ID
-- `NUTRITIONIX_APP_KEY` - Your Nutritionix API App Key
-- `JWT_SECRET` - Secret key for JWT tokens
-- `PORT` - Server port (default: 5001)
-
-## 🚀 Deployment
-
-### Production Build
-```bash
-# Build frontend
-cd frontend
-npm run build
-
-# Start production server
-cd ..
-npm start
-```
-
-### Environment Setup
-Ensure your production environment has:
-- All required environment variables
-- Proper JWT secret
-- Valid Nutritionix API credentials
-- Database write permissions
-
-### Recommended Hosting
-- **Backend**: Heroku, Railway, or DigitalOcean
-- **Frontend**: Vercel, Netlify, or GitHub Pages
-- **Database**: SQLite (development) or PostgreSQL (production)
-
-## 🤝 Contributing
-
-1. Fork the repository
-2. Create a feature branch (`git checkout -b feature/amazing-feature`)
-3. Commit your changes (`git commit -m 'Add amazing feature'`)
-4. Push to the branch (`git push origin feature/amazing-feature`)
-5. Open a Pull Request
-
-### Development Guidelines
-- Follow existing code style
-- Add tests for new features
-- Update documentation as needed
-- Ensure all tests pass
-
-## 🐛 Troubleshooting
-
-### Common Issues
-
-**Backend won't start:**
-- Check if port 5001 is available
-- Verify `.env` file exists and has correct values
-- Ensure all dependencies are installed
-
-**Frontend won't start:**
-- Check if port 3000 is available
-- Verify all frontend dependencies are installed
-- Check for syntax errors in React components
-
-**API calls failing:**
-- Verify backend server is running
-- Check Nutritionix API credentials
-- Ensure JWT token is valid
-
-**Database errors:**
-- Check file permissions for `users.db`
-- Verify SQLite is properly installed
-- Check database schema
-
-## 📈 Future Enhancements
-
-- [ ] **Barcode Scanner** - Scan food packages for quick entry
-- [ ] **Meal Planning** - Plan meals in advance
-- [ ] **Recipe Builder** - Create and save custom recipes
-- [ ] **Social Features** - Share progress with friends
-- [ ] **Mobile App** - Native iOS and Android applications
-- [ ] **Export Data** - Download nutrition data for analysis
-- [ ] **Goal Tracking** - Weight and fitness goal management
-- [ ] **Notifications** - Reminders and progress alerts
-
-## 📄 License
-
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
-
-## 🙏 Acknowledgments
-
-- **Nutritionix** - For providing comprehensive nutritional data
-- **React Team** - For the amazing frontend framework
-- **Express.js** - For the robust backend framework
-- **Open Source Community** - For all the amazing packages
-
-## 📞 Support
-
-If you encounter any issues or have questions:
-
-1. Check the [Issues](https://github.com/yourusername/calorie-tracker/issues) page
-2. Create a new issue with detailed information
-3. Include steps to reproduce the problem
-4. Provide your environment details
-
----
-
-**Built with ❤️ for health-conscious individuals who want to take control of their nutrition journey.**
-
-*Star this repository if you find it helpful! ⭐*

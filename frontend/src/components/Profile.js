@@ -18,7 +18,7 @@ const Profile = ({ user }) => {
   const fetchProfile = async () => {
     try {
       const token = localStorage.getItem('token');
-      const response = await axios.get(`http://localhost:5001/api/user/${user.userId}`, {
+      const response = await axios.get(`${process.env.REACT_APP_API_URL || 'http://localhost:5001'}/api/user/${user.userId}`, {
         headers: { Authorization: `Bearer ${token}` }
       });
       setProfile(response.data);
@@ -70,7 +70,7 @@ const Profile = ({ user }) => {
 
     try {
       const token = localStorage.getItem('token');
-      await axios.put(`http://localhost:5001/api/user/${user.userId}`, formData, {
+      await axios.put(`${process.env.REACT_APP_API_URL || 'http://localhost:5001'}/api/user/${user.userId}`, formData, {
         headers: { Authorization: `Bearer ${token}` }
       });
       
